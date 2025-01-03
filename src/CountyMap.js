@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
+import rawElectionData from './data/countypres_2000-2020.csv';
 
-const ElectionMap = () => {
+const CountyMap = () => {
   const mapRef = useRef(null);
   const svgRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +21,10 @@ const ElectionMap = () => {
           acc[county] = { dem: 0, rep: 0, total: +row.totalvotes || 0 };
         }
         
-        if (row.party_simplified === 'DEMOCRAT') {
-          acc[county].dem = +row.candidatevotes || 0;
-        } else if (row.party_simplified === 'REPUBLICAN') {
-          acc[county].rep = +row.candidatevotes || 0;
+        if (row.party === 'DEMOCRAT') {
+          acc[county].dem = + row.candidatevotes || 0;
+        } else if (row.party === 'REPUBLICAN') {
+          acc[county].rep = + row.candidatevotes || 0;
         }
         return acc;
       }, {});
@@ -31,7 +32,7 @@ const ElectionMap = () => {
 
   const setColor = () => {    
     return d3.scaleLinear()
-      .domain([-0.8, 0, 0.8])
+      .domain([-1, 0, 1])
       .range(['red', 'purple', 'blue'])
       .clamp(true);
   };
@@ -56,8 +57,6 @@ const ElectionMap = () => {
     svgRef.current = svg.node();
 
     const colorScale = setColor();
-
-    // Create nation outline
     const nation = topojson.feature(mapData, mapData.objects.nation);
     svg.append('g')
       .append('path')
@@ -113,12 +112,13 @@ const ElectionMap = () => {
         if (!mapResponse.ok) throw new Error('Failed to load map data');
         const mapData = await mapResponse.json();
 
-        const electionResponse = await fetch('/data/1976-2020-president.csv');
-        if (!electionResponse.ok) throw new Error('Failed to load election data');
-        const electionText = await electionResponse.text();
-        const electionData = d3.csvParse(electionText);
+        const response = await fetch(rawElectionData);
+        const data = await response.text();
+        const parsedData = d3.csvParse(data);
+        console.log(parsedData);
         
-        const processedData = processElectionData(electionData, year);
+        const processedData = processElectionData(parsedData, year);
+        console.log(processedData);
         drawMap(mapData, processedData);
       } catch (err) {
         setError(err.message);
@@ -156,7 +156,7 @@ const ElectionMap = () => {
         <input
           type="range"
           id="yearSlider"
-          min="1976"
+          min="2000"
           max="2020"
           step="4"
           value={year}
@@ -176,4 +176,4 @@ const ElectionMap = () => {
   );
 };
 
-export default ElectionMap;
+export default CountyMap;
