@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 import rawElectionData from './data/countypres_2000-2020.csv';
@@ -37,7 +37,7 @@ const CountyMap = () => {
       .clamp(true);
   };
 
-  const drawMap = (mapData, electionData = {}) => {
+  const drawMap = useCallback((mapData, electionData) => {
     if (!mapRef.current) return;
 
     // Clean up SGV
@@ -101,7 +101,7 @@ const CountyMap = () => {
         const repPercent = ((countyData.rep / countyData.total) * 100).toFixed(1);
         return `${d.properties.name}:\n${demPercent}% Dem\n${repPercent}% Rep`;
       });
-  };
+  }, [mapRef, svgRef]);
 
   useEffect(() => {
     const fetchData = async () => {
