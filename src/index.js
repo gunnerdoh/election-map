@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import StateMap from './ElectionMap';
-import CountyMap from './CountyMap';
+import Frontpage from './FrontPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <CountyMap />
-    <StateMap />
+    <Frontpage />
   </React.StrictMode>
 );

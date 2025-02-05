@@ -4,9 +4,10 @@ import * as topojson from 'topojson-client';
 import mapData from './assets/counties-10m.json';
 import rawElectionData from './data/1976-2020-president.csv';
 
-const ElectionMap = () => {
+function StateMap() {
   const mapRef = useRef(null);
   const [year, setYear] = useState(2020);
+  const years = Array.from({ length: 12 }, (_, i) => 1976 + i * 4);
   
   function processElectionData(data, year) {
     const votes = data
@@ -17,9 +18,9 @@ const ElectionMap = () => {
                 acc[state] = { dem: 0, rep: 0, total: +row.totalvotes };
             }
             if (row.party_simplified === 'DEMOCRAT') {
-                acc[state].dem = +row.candidatevotes;
+                acc[state].dem =+ row.candidatevotes;
             } else if (row.party_simplified === 'REPUBLICAN') {
-                acc[state].rep = +row.candidatevotes;
+                acc[state].rep =+  row.candidatevotes;
             }
             return acc;
         }, {});
@@ -107,32 +108,32 @@ const ElectionMap = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
-      <h1>Purple Election Map</h1>
-      <h2>
-        A tool showing how states and counties voted beyond red and blue
-      </h2>
-      <p>
-        Inspired by <a href="https://x.com/cremieuxrecueil/status/1855675611261317267"> this tweet</a>
-        and <a href="https://purplestatesofamerica.org/">the project</a> it references. 
-      </p>
-      <div ref={mapRef} className="border rounded-lg shadow-lg p-4" />
+      <h1 className="text-2xl font-bold mb-4">US Presidential Election Results {year}</h1>
       <div className="mb-8">
         <label htmlFor="yearSlider" className="block text-lg font-medium mb-2">
-          Election Year: {year}
+          Select Year
         </label>
-        <input
-          type="range"
-          id="yearSlider"
-          min="1976"
-          max="2020"
-          step="4"
-          value={year}
-          onChange={(e) => setYear(parseInt(e.target.value))}
-          className="w-full"
-        />
+      <div className="flex justify-start space-x-2 w-full">
+          {years.map((yr) => (
+            <button
+              key={yr}
+              onClick={() => setYear(yr)}
+              className={`px-4 py-2 rounded ${
+                year === yr
+                  ? 'bg-blue-500 text-white' // Active button style
+                  : 'bg-gray-200 text-black hover:bg-gray-300' // Inactive button style
+              } transition duration-300`}
+            >
+              {yr}
+            </button>
+            ))}
+        <div className="mt-4">
+        </div>
       </div>
+      </div>
+      <div ref={mapRef} className="border rounded-lg shadow-lg p-4" />
     </div>
   );
 };
 
-export default ElectionMap;
+export default StateMap;

@@ -3,16 +3,19 @@ import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 import rawElectionData from './data/countypres_2000-2020.csv';
 
-const CountyMap = () => {
+function CountyMap() {
   const mapRef = useRef(null);
   const svgRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [year, setYear] = useState(2020);
 
+  const years = Array.from({ length: 6 }, (_, i) => 2000 + i * 4);
+
   const processElectionData = (data, selectedYear) => {
     return data
       .filter(row => row.year === selectedYear.toString())
+      .filter(row => row.mode === "TOTAL" || row.mode === "ELECTION DAY")
       .reduce((acc, row) => {
         const county = row.county_fips?.toString().padStart(5, '0');
         if (!county) return acc;
@@ -40,12 +43,10 @@ const CountyMap = () => {
   const drawMap = useCallback((mapData, electionData) => {
     if (!mapRef.current) return;
 
-    // Clean up SGV
     if (svgRef.current) {
       svgRef.current.remove();
     }
 
-    // Create new SVG
     const svg = d3.select(mapRef.current)
       .append("svg")
       .attr("width", 975)
@@ -53,7 +54,6 @@ const CountyMap = () => {
       .attr("viewBox", [0, 0, 975, 610])
       .attr("class", "w-full h-auto");
 
-    // Store reference 
     svgRef.current = svg.node();
 
     const colorScale = setColor();
@@ -66,7 +66,6 @@ const CountyMap = () => {
       .attr('fill', 'none')
       .attr('stroke', '#333');
 
-    // Create states outline
     const states = topojson.feature(mapData, mapData.objects.states);
     svg.append('g')
       .attr('stroke', '#333')
@@ -76,7 +75,6 @@ const CountyMap = () => {
       .join('path')
       .attr('d', d3.geoPath());
 
-    // Create counties with election data
     const counties = topojson.feature(mapData, mapData.objects.counties);
     svg.append('g')
       .attr('stroke', '#999')
@@ -153,17 +151,23 @@ const CountyMap = () => {
         <label htmlFor="yearSlider" className="block text-lg font-medium mb-2">
           Select Year
         </label>
-        <input
-          type="range"
-          id="yearSlider"
-          min="2000"
-          max="2020"
-          step="4"
-          value={year}
-          onChange={(e) => setYear(parseInt(e.target.value))}
-          className="w-full"
-        />
-        <div className="text-center text-lg font-medium mt-2">{year}</div>
+        <div className="flex justify-start space-x-2 w-full">
+          {years.map((yr) => (
+            <button
+              key={yr}
+              onClick={() => setYear(yr)}
+              className={`px-4 py-2 rounded ${
+                year === yr
+                  ? 'bg-blue-500 text-white' // Active button style
+                  : 'bg-gray-200 text-black hover:bg-gray-300' // Inactive button style
+              } transition duration-300`}
+            >
+              {yr}
+            </button>
+            ))}
+        <div className="mt-4">
+        </div>
+      </div>
       </div>
       <div ref={mapRef} className="border rounded-lg shadow-lg p-4">
         {isLoading && (
