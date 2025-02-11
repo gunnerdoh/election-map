@@ -16,9 +16,6 @@ function Frontpage() {
                 <h2 className="text-xl mb-4">
                     A Visualization of US Federal Elections
                 </h2>
-                <p className="mb-4">
-                    Inspired by <a href="https://purplestatesofamerica.org/" className="text-blue-500 hover:underline">this project</a> By Greg Albers.
-                </p>
                 <button 
                     onClick={toggleMap}
                     className="bg-white-500 hover:bg-gray-200 text-black border border-black font-bold py-2 px-4"
@@ -48,7 +45,9 @@ function Frontpage() {
                         This visualization currently focuses on Democratic and Republican voting patterns. 
                         Third-party and independent candidate votes are not yet displayed in the color scheme 
                         but will be added in future updates. The map is regularly updated using the latest 
-                        available data from MIT Election Lab's official election results database. 
+                        available data from 
+                        <a className="text-blue-500 hover:underline" href="https://electiondata.mit.edu"> MIT Election Lab</a>'s 
+                        official election results database. 
                     </p>
                     <p className="mb-4">
                         The sectioning of Alaska's districts differ between the data and the map, making it difficult to 
@@ -58,6 +57,14 @@ function Frontpage() {
                     <p className="mb-4">
                         Will be updating for 2024 once data is freely available. Thanks for stopping by!                        
                     </p>
+                    <p className="mb-4">
+                        Inspired by <a href="https://purplestatesofamerica.org/" className="text-blue-500 hover:underline">this project</a> By Greg Albers.
+                    </p>
+                    <p className="font-bold">
+                        By Gunner Dohrenwend 
+                    </p>
+                    <a className="me-4 text-blue-500 hover:underline" href="https://github.com/gunnerdoh/election-map">Source Code</a>
+                    <a className="me-4 text-blue-500 hover:underline" href="https://gunnerdoh.dev">Other work</a>
                 </div>
             </div>
         </>
