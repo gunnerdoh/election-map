@@ -28,23 +28,35 @@ function Frontpage() {
                 <div className="mt-6">
                     {showCountyMap ? <CountyMap /> : <StateMap />}
                 </div>
-                <div className="mt-6">
+                <div className="mt-6 mx-56">
                     <h2 className="text-3xl font-bold mb-4 color-gray-800">How it Works</h2>
-                    <p>
-                        This is a visualization of data from 
-                        <a classList="color-blue underline" href="mitelectionlab.com"> MIT Election Lab </a> 
-                        showing a breakdown of voting demographics by state (1976-2020) and county (2000 - 2020).
+                    <p className="mb-4">
+                        This interactive map visualizes U.S. presidential election results at both 
+                        the state and county level from 2000 to 2020, using data from the MIT Election Lab. 
+                        The colors indicate the political leaning of each region: deep blue represents strongly 
+                        Democratic areas (100%), while deep red shows strongly Republican areas (100%), with various 
+                        shades of purple indicating mixed voting patterns.
                     </p>
-                    <p>
-                        Click the white button in the top left to switch the view, and the year buttons to change the year. 
-                    </p>
-                    <p>
-                        Hover over the state / county to see exact percentages. 
+                    <p className="mb-4">
+                        Each county and state is color-coded based on the percentage of votes received by each major party. 
+                        You can explore different election years using the buttons at the top of the map (2000-2020). 
+                        For detailed results, simply hover your mouse over any state or county to see the exact vote 
+                        percentages and total votes cast.
                     </p>
                     <h2 className="mt-6 mb-4 text-xl font-bold mb-4 color-gray-800">Details</h2>
-                    <p>
-                        Colors are set on a range from blue to purple to red, with 100% democrat being blue and 100%
-                        Republican being red. Third party votes are not (currently) accounted for (work in progress).
+                    <p className="mb-4"> 
+                        This visualization currently focuses on Democratic and Republican voting patterns. 
+                        Third-party and independent candidate votes are not yet displayed in the color scheme 
+                        but will be added in future updates. The map is regularly updated using the latest 
+                        available data from MIT Election Lab's official election results database. 
+                    </p>
+                    <p className="mb-4">
+                        The sectioning of Alaska's districts differ between the data and the map, making it difficult to 
+                        accuately visualize Alaska's county-wide results. This also applies to the oglala lakota reservation
+                        in South Dakota from 2000 - 2016.
+                    </p>
+                    <p className="mb-4">
+                        Will be updating for 2024 once data is freely available. Thanks for stopping by!                        
                     </p>
                 </div>
             </div>

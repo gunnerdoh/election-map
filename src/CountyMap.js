@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
-import rawElectionData from './data/countypres_2000-2020.csv';
+import rawElectionData from './data/test1_cleaned.csv';
 
 function CountyMap() {
   const mapRef = useRef(null);
@@ -112,11 +112,9 @@ function CountyMap() {
 
         const response = await fetch(rawElectionData);
         const data = await response.text();
-        const parsedData = d3.csvParse(data);
-        console.log(parsedData);
-        
+        const parsedData = d3.csvParse(data);        
         const processedData = processElectionData(parsedData, year);
-        console.log(processedData);
+        
         drawMap(mapData, processedData);
       } catch (err) {
         setError(err.message);
@@ -134,7 +132,7 @@ function CountyMap() {
         svgRef.current.remove();
       }
     };
-  }, [year]);
+  }, [year, drawMap]);
 
   if (error) {
     return (
@@ -158,8 +156,8 @@ function CountyMap() {
               onClick={() => setYear(yr)}
               className={`px-4 py-2 rounded ${
                 year === yr
-                  ? 'bg-blue-500 text-white' // Active button style
-                  : 'bg-gray-200 text-black hover:bg-gray-300' // Inactive button style
+                  ? 'bg-blue-500 text-white' 
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
               } transition duration-300`}
             >
               {yr}
