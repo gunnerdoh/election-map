@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/election-map/static/css/main.727690a2.css",
-    "main.js": "/election-map/static/js/main.7d2ff89f.js",
+    "main.css": "/election-map/static/css/main.ef005fc1.css",
+    "main.js": "/election-map/static/js/main.a683bbaf.js",
     "static/media/test1_cleaned.csv": "/election-map/static/media/test1_cleaned.dcd1d7cb5865794e1e7b.csv",
     "static/media/1976-2020-president.csv": "/election-map/static/media/1976-2020-president.462ca7c2717802e1d486.csv",
     "index.html": "/election-map/index.html",
-    "main.727690a2.css.map": "/election-map/static/css/main.727690a2.css.map",
-    "main.7d2ff89f.js.map": "/election-map/static/js/main.7d2ff89f.js.map"
+    "main.ef005fc1.css.map": "/election-map/static/css/main.ef005fc1.css.map",
+    "main.a683bbaf.js.map": "/election-map/static/js/main.a683bbaf.js.map"
   },
   "entrypoints": [
-    "static/css/main.727690a2.css",
-    "static/js/main.7d2ff89f.js"
+    "static/css/main.ef005fc1.css",
+    "static/js/main.a683bbaf.js"
   ]
 }
